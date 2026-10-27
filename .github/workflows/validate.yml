@@ -1,0 +1,38 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate skill structure
+        run: npm run validate
+
+      - name: Check plugin manifest versions are in sync
+        run: npm run check-plugin-version
+
+      - name: Shellcheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: ./scripts
+
+      - name: Validate plugin manifests parse as JSON
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('.claude-plugin/plugin.json'))"
+          node -e "JSON.parse(require('fs').readFileSync('.claude-plugin/marketplace.json'))"
+          node -e "JSON.parse(require('fs').readFileSync('.cursor-plugin/plugin.json'))"
+          node -e "JSON.parse(require('fs').readFileSync('.cursor-plugin/marketplace.json'))"
