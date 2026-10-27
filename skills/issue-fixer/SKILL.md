@@ -46,7 +46,7 @@ Make the smallest change that corrects the root cause `verifying-findings`'s rec
 
 ### 5. Validate
 
-Run the full ladder in [references/VALIDATION.md](references/VALIDATION.md): the regression test, the original reproduction, affected-package tests, the full suite/lint/type-check/static checks, and — for a performance fix — a repeated controlled benchmark reporting variance, per `verifying-findings/references/PERFORMANCE-EVIDENCE.md`.
+Run the full ladder in [references/VALIDATION.md](references/VALIDATION.md): the regression test, the original reproduction, affected-package tests, the full suite/lint/type-check/static checks, and, for a performance fix, a repeated controlled benchmark reporting variance, per `verifying-findings/references/PERFORMANCE-EVIDENCE.md`.
 
 ### 6. Independent review
 

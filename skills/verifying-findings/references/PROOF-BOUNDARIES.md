@@ -3,7 +3,7 @@
 A proof boundary is an honest statement of exactly what was and wasn't demonstrated. State it in two parts:
 
 - **Tested:** the exact commands/requests run, the exact environment (OS, runtime version, config), and the exact input that triggers it.
-- **Not tested:** every adjacent thing you did *not* check — other platforms, other configurations, other input shapes that might also trigger it, whether it holds on other supported versions.
+- **Not tested:** every adjacent thing you did *not* check: other platforms, other configurations, other input shapes that might also trigger it, and whether it holds on other supported versions.
 
 ## Rationalizations to reject
 

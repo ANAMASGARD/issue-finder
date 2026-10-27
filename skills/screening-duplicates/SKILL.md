@@ -31,7 +31,7 @@ For each candidate, construct multiple queries, not one:
 
 See [references/FORGES.md](references/FORGES.md) for exact commands per forge. At minimum, cover:
 
-- Issues and PRs, in every state (open, closed, merged), not just open ones — a closed-and-fixed issue is still a duplicate, just one with a different disposition consequence (`Already fixed upstream`).
+- Issues and PRs, in every state (open, closed, merged), not just open ones. A closed-and-fixed issue is still a duplicate, just one with a different disposition consequence (`Already fixed upstream`).
 - Discussions/forums if the project uses them.
 - Commit history: `git log --grep`, `-S`, `-G` for the exact symbols or literal strings from the root cause.
 - Changelogs and release notes for a line mentioning the same fix.

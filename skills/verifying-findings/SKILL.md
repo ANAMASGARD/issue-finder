@@ -30,7 +30,7 @@ A candidate must pass all six before it can be considered for `Confirmed and act
 
 Route to specialized gates when the candidate needs them:
 
-- Security impact (unauthorized access, injection, escalation, data exposure): [references/SECURITY-CANDIDATES.md](references/SECURITY-CANDIDATES.md) — read this before you do anything else with the candidate, since it changes the disposition and authorization model.
+- Security impact (unauthorized access, injection, escalation, data exposure): [references/SECURITY-CANDIDATES.md](references/SECURITY-CANDIDATES.md). Read this before you do anything else with the candidate, since it changes the disposition and authorization model.
 - Performance regression or resource-usage claim: [references/PERFORMANCE-EVIDENCE.md](references/PERFORMANCE-EVIDENCE.md).
 - Intermittent, racy, or otherwise nondeterministic reproduction: [references/NONDETERMINISTIC.md](references/NONDETERMINISTIC.md).
 

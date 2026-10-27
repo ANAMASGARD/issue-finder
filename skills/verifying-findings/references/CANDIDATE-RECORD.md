@@ -1,6 +1,6 @@
 # Candidate record format
 
-## `.issue-finder/candidates.md` — the ledger
+## `.issue-finder/candidates.md`: the ledger
 
 One row per candidate, updated as its status changes:
 
@@ -12,7 +12,7 @@ One row per candidate, updated as its status changes:
 
 Status is one of: `new`, `verifying`, `verified`, `screened`, `drafted`. Never delete a row, even for `Rejected hypothesis`; a complete ledger is part of the evidentiary trail.
 
-## `findings/IF-###-<slug>/record.md` — the full record
+## `findings/IF-###-<slug>/record.md`: the full record
 
 ```markdown
 # IF-### <slug>
@@ -33,7 +33,7 @@ How this is reached in a configuration the project actually supports. Cite the c
 - Baseline commit SHA.
 - Exact minimal command/request/input.
 - Run 1 output (verbatim, redacted).
-- Run 2 output (verbatim, redacted) — confirms it's not a fluke.
+- Run 2 output (verbatim, redacted), confirming it's not a fluke.
 - Minimization: what was removed/simplified from the original repro and confirmation it still fails.
 
 ## Gate 4: Root cause
@@ -49,7 +49,7 @@ What was tested and what wasn't (see PROOF-BOUNDARIES.md). Affected users/versio
 One of the seven, with a one-line justification.
 
 ## Evidence
-Links/paths to captured output, screenshots, logs — all redacted.
+Links/paths to captured output, screenshots, and logs, all redacted.
 ```
 
 A record missing any gate's evidence cannot be disposed `Confirmed and actionable`; it stays `verifying` until the missing gate is filled in or the candidate is disposed some other way.

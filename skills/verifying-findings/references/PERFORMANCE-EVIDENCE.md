@@ -14,9 +14,9 @@ A single before/after timing number is not evidence. Use this procedure before r
    - Does it break known hardware/throughput ceilings? (A sign of a measurement error.)
    - Did it silently error while still reporting a rate?
    - Does it reproduce on a re-run? (Check variance, not just one run.)
-   - Does the workload actually matter — is it representative of real usage?
+   - Does the workload actually matter? Is it representative of real usage?
    - Did the benchmark actually execute the intended code path at all?
-6. **Report with the identified limiting factor**, not a bare number: e.g., "CPU-bound, single-threaded — confirmed via per-core utilization during the run," with the supporting observation attached as evidence.
+6. **Report with the identified limiting factor**, not a bare number: e.g., "CPU-bound, single-threaded, confirmed via per-core utilization during the run," with the supporting observation attached as evidence.
 
 ## Common pitfalls to rule out before concluding
 

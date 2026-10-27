@@ -6,12 +6,12 @@ This file governs how **this repository** (the skill suite itself) is maintained
 
 Skills live flat under `skills/`, one directory per skill, no bucket folders:
 
-- `issue-finder`, `issue-fixer` — **user-invoked** entry points (`disable-model-invocation: true`, `policy.allow_implicit_invocation: false` in `agents/openai.yaml`).
-- `exploratory-testing`, `verifying-findings`, `screening-duplicates`, `drafting-issues` — **model-invoked** disciplines, reachable by name or standalone.
+- `issue-finder`, `issue-fixer`: **user-invoked** entry points (`disable-model-invocation: true`, `policy.allow_implicit_invocation: false` in `agents/openai.yaml`).
+- `exploratory-testing`, `verifying-findings`, `screening-duplicates`, `drafting-issues`: **model-invoked** disciplines, reachable by name or standalone.
 
 See [`.agents/invocation.md`](.agents/invocation.md) for the mechanics of that split, and [`.agents/adr/0001-user-invoked-entry-points.md`](.agents/adr/0001-user-invoked-entry-points.md) for why it was chosen over making `issue-finder` auto-fire.
 
-Every skill folder must contain, at minimum, `SKILL.md` and `agents/openai.yaml`. A skill's `name:` field must equal its directory name. Every skill must appear in: the top-level `README.md` reference table, `docs/skills/<name>.md`, `.claude-plugin/plugin.json`'s `skills` array, and `scripts/validate-skills.mjs`'s expected-skill list. Adding, renaming, or removing a skill means updating all four in the same change — `scripts/validate-skills.mjs` fails CI otherwise.
+Every skill folder must contain, at minimum, `SKILL.md` and `agents/openai.yaml`. A skill's `name:` field must equal its directory name. Every skill must appear in: the top-level `README.md` reference table, `docs/skills/<name>.md`, `.claude-plugin/plugin.json`'s `skills` array, and `scripts/validate-skills.mjs`'s expected-skill list. Adding, renaming, or removing a skill means updating all four in the same change; `scripts/validate-skills.mjs` fails CI otherwise.
 
 ## Install wording
 

@@ -1,6 +1,6 @@
 # Security-sensitive candidates
 
-Read this the moment a candidate's suspected impact touches unauthorized access, data exposure, privilege escalation, injection, authentication/authorization bypass, or anything else that would be embarrassing or harmful if public before a fix exists. The disposition is `Security-sensitive: private handling required` the instant this applies, overriding every other disposition, even if some gates below aren't fully passed yet — "needs more validation" and "security-sensitive" are not mutually exclusive, and the private-handling rule wins.
+Read this the moment a candidate's suspected impact touches unauthorized access, data exposure, privilege escalation, injection, authentication/authorization bypass, or anything else that would be embarrassing or harmful if public before a fix exists. The disposition is `Security-sensitive: private handling required` the instant this applies, overriding every other disposition, even if some gates below aren't fully passed yet. "Needs more validation" and "security-sensitive" are not mutually exclusive, and the private-handling rule wins.
 
 ## What changes immediately
 
@@ -13,12 +13,12 @@ Read this the moment a candidate's suspected impact touches unauthorized access,
 
 All six must pass before `Confirmed and actionable` can even be considered (it will still end in the private-handling disposition instead, but it still needs real evidence):
 
-1. **Process** — is the vulnerable code path actually part of a process/request the target runs, not dead code or a disabled feature?
-2. **Reachability** — can an attacker actually reach this path given the project's real deployment model and auth boundaries, not just in an artificial internal call?
-3. **Real Impact** — what does the attacker actually gain, demonstrated, not assumed? State it in terms of confidentiality, integrity, or availability loss you actually showed.
-4. **PoC Validation** — does a minimal, safe, non-destructive proof-of-concept actually trigger the claimed behavior?
-5. **Math/Logic Bounds** — for anything involving calculations, encoding, or protocol logic, does the exploit actually hold up arithmetically/logically, or does it only look plausible on paper?
-6. **Environment** — does this reproduce in the project's actual supported deployment configuration, not a weakened or misconfigured one you set up yourself?
+1. **Process**: is the vulnerable code path actually part of a process/request the target runs, not dead code or a disabled feature?
+2. **Reachability**: can an attacker actually reach this path given the project's real deployment model and auth boundaries, not just in an artificial internal call?
+3. **Real Impact**: what does the attacker actually gain, demonstrated, not assumed? State it in terms of confidentiality, integrity, or availability loss you actually showed.
+4. **PoC Validation**: does a minimal, safe, non-destructive proof-of-concept actually trigger the claimed behavior?
+5. **Math/Logic Bounds**: for anything involving calculations, encoding, or protocol logic, does the exploit actually hold up arithmetically/logically, or does it only look plausible on paper?
+6. **Environment**: does this reproduce in the project's actual supported deployment configuration, not a weakened or misconfigured one you set up yourself?
 
 A candidate that fails any of these gates is not "confirmed at lower confidence," it's `Rejected hypothesis` or `Needs additional runtime validation`, same as any other candidate.
 
@@ -26,8 +26,8 @@ A candidate that fails any of these gates is not "confirmed at lower confidence,
 
 Estimate a CVSS v4.0 **Base** score only, from what you actually observed:
 
-- **Attack Vector**: Network / Adjacent / Local / Physical — how must the attacker reach this?
-- **Attack Complexity**: Low / High — does it work reliably, or does it need conditions outside attacker control?
+- **Attack Vector**: Network / Adjacent / Local / Physical. How must the attacker reach this?
+- **Attack Complexity**: Low / High. Does it work reliably, or does it need conditions outside attacker control?
 - **Privileges Required**: None / Low / High.
 - **User Interaction**: does a victim have to act (click, open, run something)?
 - **Confidentiality / Integrity / Availability impact** (and the same for any Subsequent System affected): High / Low / None, based only on what you actually demonstrated.

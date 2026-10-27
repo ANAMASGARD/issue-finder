@@ -4,7 +4,7 @@ A generalized, fictional case showing all six gates and a full record, start to 
 
 ## The lead
 
-While running the Guidebook tour (`exploratory-testing`) and following the chart's own README example for enabling a scheduled cleanup job, a journey noted: the `Deployment`'s pods mount the configured `extraVolumes` correctly, but pods created by the chart's `CronJob` do not, even though `values.yaml` documents `extraVolumes` as applying to "all workloads" in the chart. Oracle cited: **Claims** — the values schema's own comment says "applies to all workloads"; the CronJob's pods don't get it.
+While running the Guidebook tour (`exploratory-testing`) and following the chart's own README example for enabling a scheduled cleanup job, a journey noted: the `Deployment`'s pods mount the configured `extraVolumes` correctly, but pods created by the chart's `CronJob` do not, even though `values.yaml` documents `extraVolumes` as applying to "all workloads" in the chart. Oracle cited: **Claims**. The values schema's own comment says "applies to all workloads"; the CronJob's pods don't get it.
 
 ## Claim, restated
 
@@ -33,13 +33,13 @@ Setting `extraVolumes` in `values.yaml` and enabling the CronJob (`cronjob.enabl
 ## Gate 5: Negative control and disproof attempt
 
 - Negative control: the same `helm template` run against the `Deployment` template (not CronJob) with the same values correctly produces both the `volumes` and `volumeMounts` entries, confirming the mechanism (templating itself) works; the defect is specific to the `cronjob.yaml` template.
-- Disproof attempts: checked the chart's `CHANGELOG.md` and open/closed issues for an existing fix or an intentional note that CronJob volumes are out of scope — none found (this step is formally handed to `screening-duplicates` next, but a quick check here avoided wasting further gate time if it had already been fixed). Checked the current upstream default branch at its latest commit — the same gap is present there too, ruling out `Already fixed upstream`.
+- Disproof attempts: checked the chart's `CHANGELOG.md` and open/closed issues for an existing fix or an intentional note that CronJob volumes are out of scope, and found none (this step is formally handed to `screening-duplicates` next, but a quick check here avoided wasting further gate time if it had already been fixed). Checked the current upstream default branch at its latest commit: the same gap is present there too, ruling out `Already fixed upstream`.
 
 ## Gate 6: Proof boundaries, impact, scope
 
 - Tested: `helm template` rendering only, on the pinned baseline and current upstream HEAD, with a single `extraVolumes` entry of type `configMap`.
-- Not tested: actual cluster scheduling behavior (whether the CronJob's pod fails to start, or silently runs without the volume — rendering alone proves the manifest is wrong, not yet the runtime consequence); other volume types (`secret`, `emptyDir`, PVC) might or might not hit the same gap, not yet checked individually.
-- Impact: every user of this chart who enables the CronJob and relies on `extraVolumes` for it (as the docs tell them they can) gets a CronJob pod silently missing a volume mount it was told would be present — likely a crash loop or silent misbehavior at runtime, not yet directly observed in a live cluster in this pass.
+- Not tested: actual cluster scheduling behavior (whether the CronJob's pod fails to start, or silently runs without the volume; rendering alone proves the manifest is wrong, not yet the runtime consequence); other volume types (`secret`, `emptyDir`, PVC) might or might not hit the same gap, not yet checked individually.
+- Impact: every user of this chart who enables the CronJob and relies on `extraVolumes` for it (as the docs tell them they can) gets a CronJob pod silently missing a volume mount it was told would be present, likely a crash loop or silent misbehavior at runtime, not yet directly observed in a live cluster in this pass.
 - Scope: the chart's CronJob feature, all currently supported chart versions that include both this comment and this template gap (checked: yes, present across the last three tagged releases).
 
 ## Disposition
