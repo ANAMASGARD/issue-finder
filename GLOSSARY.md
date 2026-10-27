@@ -20,7 +20,7 @@ The single verdict a candidate ends in: Confirmed and actionable, Confirmed but 
 A candidate with the disposition Confirmed and actionable (or the security-sensitive equivalent). The only kind of candidate that reaches `drafting-issues`.
 
 **Oracle**:
-The specific, named reason a behavior is judged wrong, not just surprising, drawn from FEW HICCUPPS (history, image, comparable products, claims, user expectations, product, purpose, statutes/standards). Every lead cites one. See `skills/exploratory-testing/references/ORACLES.md`.
+The specific, named reason a behavior is judged wrong, not just surprising, drawn from FEW HICCUPPS (familiarity, explainability, world, history, image, comparable products, claims, user's desires, product, purpose, statutes/standards). Every lead cites one. See `skills/exploratory-testing/references/ORACLES.md`.
 
 **Journey**:
 One chartered exploration of the target, scoped to a persona and a tour, recorded in `journeys.md` as pass, fail, partial, or blocked. The unit of work inside `exploratory-testing`.
