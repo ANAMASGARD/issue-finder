@@ -1,0 +1,14 @@
+# Hunting lanes
+
+Use these eight lanes to turn exploratory-testing's journey results, plus direct code reading, into a bounded set of hypotheses. A lane is a place to look, not a quota to fill; most engagements will only have real leads in two or three of them.
+
+1. **Functional correctness.** Wrong results, wrong state transitions, silently swallowed errors, crashes on documented input, wrong exit codes or output formats, missing validation, broken retry/rollback/cleanup.
+2. **Configuration and deployment.** A documented config value that never reaches the code that reads it, bad templating/defaults/conditionals, invalid generated manifests, broken upgrade or offline-install paths, permissions missing for a documented feature, a release artifact that differs from source.
+3. **Cross-component contracts.** Type or schema mismatches between a producer and its consumer, broken path/encoding/timestamp transformations across a boundary, version-skew assumptions, wrong artifact names or locations between build and deploy steps.
+4. **State, reliability, and concurrency.** Lost or duplicated work, resource leaks (connections, file handles, goroutines/tasks), deadlocks or races, unbounded queues or caches, non-idempotent operations, incomplete shutdown or cleanup, stale state after a delete.
+5. **Performance.** Only pursue this with a named user-facing metric and a controlled benchmark or profile (warm-up, repetition, reported variance). Repeated avoidable work, N+1 calls, lock contention, slow startup or rendering. Intuition ("this feels slow") is a lead for `exploratory-testing` to charter, not a performance finding on its own.
+6. **Security.** Authentication/authorization bypass, isolation failures between tenants or namespaces, unsafe secret handling, injection or path traversal with a demonstrably reachable untrusted input, signature/replay verification gaps, unsafe deserialization, privilege escalation, fail-open behavior at a trust boundary. A broad permission or an unpinned dependency is a hypothesis, not a finding, until a reachable result is demonstrated.
+7. **Missing functionality.** Only with a concrete user problem, evidence from the project's own docs/roadmap/issues/support patterns, the current workaround and its cost, and bounded acceptance criteria. A personal preference for how something should work is not a lead.
+8. **Dead-code cleanup.** Only with proof the code is unreachable across static references, dynamic registration/reflection, generated files, plugins, and any public compatibility promise. "No local references found" alone does not prove this.
+
+Record each lane you actually investigated, even the ones that turned up nothing, so the final report can say honestly what was looked at versus what wasn't (a stated boundary, not a silent gap).

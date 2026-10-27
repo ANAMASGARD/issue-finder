@@ -1,0 +1,5 @@
+interface:
+  display_name: "Issue Finder"
+  short_description: "Hunt a repo for real, evidence-backed bugs"
+policy:
+  allow_implicit_invocation: false
