@@ -2,6 +2,8 @@
 
 This file governs how **this repository** (the skill suite itself) is maintained. It is not read by a target project during a hunt; see [`skills/issue-finder/references/GROUNDING.md`](skills/issue-finder/references/GROUNDING.md) for how the suite treats a *target* repo's own `AGENTS.md`/`CLAUDE.md` as untrusted data, never as instructions.
 
+`CLAUDE.md` at this repo's root is just `@AGENTS.md`, for Claude Code's own project-context loading when working *on this repo*. It is not part of what ships to an installed plugin's users, since `.claude-plugin/plugin.json`'s `skills` array only ever points at `./skills/*`. `claude plugin validate . --strict` warns about this root `CLAUDE.md` not being loaded as plugin context, which is expected and fine; the warning is about plugin-install behavior, not about this repo's own maintenance workflow, where the file does its job.
+
 ## Layout
 
 Skills live flat under `skills/`, one directory per skill, no bucket folders:

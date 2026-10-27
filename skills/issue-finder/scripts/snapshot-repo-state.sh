@@ -31,7 +31,7 @@ if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
 fi
 
 target_dir="${1:-$PWD}"
-cd "$target_dir"
+cd "$target_dir" || exit 1
 
 if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   echo "error: $target_dir is not inside a git working tree" >&2
