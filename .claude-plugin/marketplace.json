@@ -1,0 +1,23 @@
+{
+  "name": "anamasgard",
+  "owner": {
+    "name": "Gaurav Chaudhary",
+    "url": "https://github.com/ANAMASGARD"
+  },
+  "description": "Issue Finder: an evidence-driven bug-hunting agent skill suite, as an installable Claude Code plugin.",
+  "plugins": [
+    {
+      "name": "issue-finder",
+      "source": "./",
+      "description": "Evidence-driven bug, vulnerability, and performance hunting for any cloned codebase, using the project like a real user and verifying every finding before it is reported.",
+      "category": "security",
+      "keywords": [
+        "bug-hunting",
+        "security",
+        "exploratory-testing",
+        "qa",
+        "vulnerability-research"
+      ]
+    }
+  ]
+}

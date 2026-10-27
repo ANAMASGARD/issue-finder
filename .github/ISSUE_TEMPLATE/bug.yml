@@ -1,0 +1,43 @@
+name: Bug
+description: A skill did the wrong thing in a real engagement.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please check `SCOPE.md` and `.out-of-scope/` first. A hypothetical improvement ("it would be better if...") without an observed failure will be closed as `needs-info`.
+  - type: input
+    id: skill
+    attributes:
+      label: Skill
+      description: Which skill, e.g. `issue-finder`, `verifying-findings`.
+    validations:
+      required: true
+  - type: input
+    id: harness
+    attributes:
+      label: Harness and version
+      description: e.g. Claude Code 2.3.1, Codex CLI 0.40, Cursor. Say how you installed (plugin or skills.sh) and which version.
+    validations:
+      required: true
+  - type: input
+    id: target
+    attributes:
+      label: Target project
+      description: The repo (or kind of project) you were hunting when this happened, and roughly how big it is.
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you ran, and what the skill did. Paste the relevant part of the session. Redact secrets.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+      description: What the skill should have done instead, and which line of the SKILL.md (if any) says so.
+    validations:
+      required: true

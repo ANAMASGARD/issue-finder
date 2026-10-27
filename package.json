@@ -1,0 +1,22 @@
+{
+  "name": "issue-finder",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Evidence-driven agent skill suite that hunts a locally cloned codebase for real bugs, vulnerabilities, performance problems, and missing features by using the project like a real user.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ANAMASGARD/issue-finder"
+  },
+  "license": "MIT",
+  "scripts": {
+    "changeset": "changeset",
+    "version": "changeset version && node scripts/sync-plugin-version.mjs",
+    "check-plugin-version": "node scripts/sync-plugin-version.mjs --check",
+    "validate": "node scripts/validate-skills.mjs"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.30.0"
+  },
+  "packageManager": "npm@10.9.4"
+}

@@ -1,0 +1,29 @@
+{
+  "name": "issue-finder",
+  "version": "0.1.0",
+  "description": "Evidence-driven bug, vulnerability, and performance hunting for any cloned codebase: use the project like a real user, verify every finding against reproducible evidence, screen for duplicates, and draft maintainer-ready reports. Never edits source without a separate, explicit issue-fixer run.",
+  "author": {
+    "name": "Gaurav Chaudhary",
+    "url": "https://github.com/ANAMASGARD"
+  },
+  "homepage": "https://github.com/ANAMASGARD/issue-finder",
+  "repository": "https://github.com/ANAMASGARD/issue-finder",
+  "license": "MIT",
+  "keywords": [
+    "bug-hunting",
+    "security",
+    "code-review",
+    "exploratory-testing",
+    "qa",
+    "vulnerability-research",
+    "issue-triage"
+  ],
+  "skills": [
+    "./skills/issue-finder",
+    "./skills/exploratory-testing",
+    "./skills/verifying-findings",
+    "./skills/screening-duplicates",
+    "./skills/drafting-issues",
+    "./skills/issue-fixer"
+  ]
+}
