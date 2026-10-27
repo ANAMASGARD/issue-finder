@@ -8,11 +8,12 @@ If you find a vulnerability in this repository's own skill files or scripts (for
 
 ## When Issue Finder finds a vulnerability in a *target* project
 
-This is the more common case, and it is handled entirely inside the skill, not this file. When `verifying-findings` reaches the disposition **Security-sensitive: private handling required** for something found in a project you're hunting:
+This is the more common case, and it is handled entirely inside the skill, not this file. When a lead's impact involves unauthorized access, data exposure, or privilege escalation, `issue-finder` treats it as security-sensitive:
 
-- The finding is written only to `.issue-finder/private/` in the target checkout, created with directory mode `0700` and file mode `0600`.
-- `drafting-issues` never writes a public issue draft for it. It writes a private advisory draft instead, following `skills/drafting-issues/references/SECURITY-ADVISORY.md`.
-- Nothing is submitted anywhere (no GitHub private advisory, no email to a security contact) without you explicitly authorizing that specific action. The suite's default, recorded in `ENGAGEMENT.md`, is **no**.
+- `scripts/sync-and-branch.sh` creates `.issue-finder/private/` at directory mode `0700` up front, before any hunting starts. The finding's full reproduction, root cause, and impact are written only there.
+- The scorecard and `REPORT.md` show only "Security finding (details in private/)" with its confidence and priority, never a description, a code snippet, or a reproduction step, regardless of what's authorized for ordinary findings.
+- Nothing is submitted anywhere (no GitHub private advisory, no email to a security contact) without you explicitly authorizing that specific action in chat, at that exact point.
+- `issue-fixer` will prepare a local patch for a security-sensitive finding only if you authorize local branch and source changes for it specifically, and it never opens a public PR for one; the patch is handed back for private coordination instead.
 - The agent never uses production systems, real user data, destructive payloads, or denial-of-service techniques to demonstrate the issue, and never persists access.
 
-If you decide to submit the finding, the target project's own `SECURITY.md` is the authority on how, and `drafting-issues` reads it as part of its preflight. Most GitHub-hosted projects accept reports through **Security → Report a vulnerability**, which opens a private advisory thread with maintainers (see the GitHub docs link above). Projects without a `SECURITY.md` and without GitHub private reporting enabled should be treated as not having a documented channel; say so in the draft rather than guessing at a contact.
+If you decide to submit the finding, the target project's own `SECURITY.md` is the authority on how. Most GitHub-hosted projects accept reports through **Security → Report a vulnerability**, which opens a private advisory thread with maintainers (see the GitHub docs link above). Projects without a `SECURITY.md` and without GitHub private reporting enabled should be treated as not having a documented channel; say so explicitly rather than guessing at a contact.

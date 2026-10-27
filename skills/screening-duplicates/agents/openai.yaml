@@ -1,3 +1,0 @@
-interface:
-  display_name: "Screening Duplicates"
-  short_description: "Check whether a finding is already known"

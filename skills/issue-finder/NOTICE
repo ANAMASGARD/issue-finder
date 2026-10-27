@@ -1,0 +1,32 @@
+Issue Finder
+Copyright (C) 2026 Gaurav Chaudhary
+https://github.com/ANAMASGARD/issue-finder
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, version 3 of the License only
+(GPL-3.0-only). See the LICENSE file for the full license text.
+
+Additional term under GPLv3 section 7(b)
+-----------------------------------------
+
+Pursuant to section 7(b) of the GNU General Public License version 3,
+as the copyright holder of this program I require preservation of the
+following reasonable legal notice and author attribution in all copies
+and in all substantial portions of the Program, including modified
+versions and forks:
+
+    "Issue Finder by Gaurav Chaudhary
+     https://github.com/ANAMASGARD/issue-finder"
+
+This notice must appear in this NOTICE file (or its direct equivalent)
+in any copy, fork, or redistribution of this program, in source or
+compiled form. You may not remove or obscure this attribution, even
+when exercising your rights under the GPL to modify, rebrand, or
+redistribute the work. This additional term does not restrict any
+other right granted by the GPL; it only requires that credit survive
+alongside those rights.
+
+Everything else about your rights and obligations is governed solely
+by the GNU General Public License, version 3 only, in the LICENSE
+file in this repository.

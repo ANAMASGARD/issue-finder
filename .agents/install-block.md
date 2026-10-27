@@ -57,7 +57,7 @@ Re-run to update; Gemini does not auto-update skills.
 npx skills@latest add ANAMASGARD/issue-finder -a <agent>  # cursor, opencode, windsurf, devin, amp; omit -a to choose
 ```
 
-When the installer asks which skills to take, choose all six: `issue-finder`, `exploratory-testing`, `verifying-findings`, `screening-duplicates`, `drafting-issues`, `issue-fixer`. Installing only `issue-finder` leaves it unable to call its companions. To update, run `npx skills@latest update`, and re-run `add` to pick up new skills.
+Take both skills: `issue-finder` and `issue-fixer`. `issue-finder` hands off to `issue-fixer` by name once you pick a finding to fix, so installing only one leaves that handoff unable to complete. To update, run `npx skills@latest update`, and re-run `add` to pick up changes.
 
 </canonical-block>
 
@@ -66,9 +66,9 @@ When the installer asks which skills to take, choose all six: `issue-finder`, `e
 <canonical-block name="single-skill">
 
 ```bash
-npx skills@latest add ANAMASGARD/issue-finder --skill issue-finder --skill exploratory-testing --skill verifying-findings --skill screening-duplicates --skill drafting-issues
+npx skills@latest add ANAMASGARD/issue-finder --skill issue-finder
 ```
 
-Omit `issue-fixer` only if you never want this suite touching source code, even on request.
+Omit `issue-fixer` only if you never want this suite touching source code, even on request; you can still fix findings yourself from the report.
 
 </canonical-block>

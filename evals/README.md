@@ -6,19 +6,19 @@ These are run manually, by a maintainer, against a real agent harness. There's n
 
 ## `triggers.json`
 
-Query and near-miss pairs for the four model-invoked skills (`exploratory-testing`, `verifying-findings`, `screening-duplicates`, `drafting-issues`). Each entry has a query that should fire the skill, and a near-miss query, close in surface wording, that should not. Run each query against an agent with the suite installed and check whether the right skill (or no skill) actually engaged.
+Query and near-miss pairs. `issue-finder` is user-invoked only: the near-miss queries must not fire it, even though they mention bugs. `issue-fixer` is model-invoked and should fire only when a specific `IF-###` ID is in play.
 
 ## `evals.json`
 
-Fixture-based end-to-end scenarios. Each entry names a fixture under `fixtures/`, the invocation to run against it, and the expected outcome: a disposition, a specific behavior (`ENGAGEMENT.md` state, workspace exclusion, severity ceiling), or an explicit "no findings" result. Run `/issue-finder` (or the named companion skill directly) against the fixture and compare.
+Fixture-based end-to-end scenarios. Each entry names a fixture under `fixtures/`, the invocation to run against it, and the expected outcome: a finding count, a confidence floor, a priority, or an explicit "no findings" result. Run `/issue-finder` against the fixture and compare.
 
 ## `fixtures/`
 
 Tiny, self-contained, throwaway projects, each built to exercise exactly one behavior:
 
-- **`cli-readme-mismatch/`**: a CLI whose README documents a flag that silently does nothing. Expected: `exploratory-testing`'s Guidebook tour catches it as a Claims-oracle violation, `verifying-findings` confirms it (it's trivially reproducible), and the engagement ends with one `Confirmed and actionable` finding.
+- **`cli-readme-mismatch/`**: a CLI whose README documents a flag that silently does nothing. Expected: hunting the documented examples catches it, confidence 7 or more, P1.
 - **`clean-library/`**: a small, correct library with accurate docs and no bugs. Expected: a full run ends honestly at zero findings, stated plainly in `REPORT.md`, not padded with low-value nitpicks to look more thorough.
-- **`path-traversal-server/`**: a toy HTTP server with a real path-traversal vulnerability in its static-file handler. Expected: `verifying-findings` disposes it `Security-sensitive: private handling required`, evidence is written only to `.issue-finder/private/` (mode 0700/0600), and `drafting-issues` produces a private `SECURITY-ADVISORY.md` draft, never a public bug report, regardless of what `ENGAGEMENT.md` authorizes for other findings.
+- **`path-traversal-server/`**: a toy HTTP server with a real path-traversal vulnerability in its static-file handler. Expected: P0 security finding, evidence written only to `.issue-finder/private/` (directory mode 0700), never a public description.
 
 ## Running a fixture manually
 

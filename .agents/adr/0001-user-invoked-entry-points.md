@@ -1,3 +1,5 @@
+> **Amended by [ADR 0004](0004-two-skill-find-then-fix.md).** `issue-fixer` is now model-invoked: `issue-finder` hands off to it directly once the user names a specific finding to fix, instead of requiring a separate `/issue-fixer <id>` command. `issue-finder` itself is unchanged and still user-invoked only.
+
 # Make `issue-finder` and `issue-fixer` user-invoked, not model-invoked
 
 `issue-finder` builds the target project, exercises it like a real user across many journeys, and can run for a long time; `issue-fixer` creates a local branch and writes source changes. Both are expensive, consequential operations.

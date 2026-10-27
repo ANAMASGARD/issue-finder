@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+// SPDX-License-Identifier: GPL-3.0-only
+// Copyright (C) 2026 Gaurav Chaudhary. See NOTICE for required attribution.
+//
 // Copy package.json's version into .claude-plugin/plugin.json and
 // .cursor-plugin/plugin.json, so all three agree.
 //

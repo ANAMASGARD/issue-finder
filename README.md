@@ -1,22 +1,41 @@
 # Issue Finder
 
-An evidence-driven agent skill suite that hunts a locally cloned codebase for real bugs, vulnerabilities, performance problems, and missing features, by using the project the way a real human user would, then verifying every candidate against evidence, screening for duplicates, ranking, and writing local, human-reviewable drafts.
+[![skills.sh](https://skills.sh/b/ANAMASGARD/issue-finder)](https://skills.sh/ANAMASGARD/issue-finder)
 
-Give it a cloned open-source project and it explores the project like a user, not a static scanner: it installs it, runs it, clicks through it, drives its CLI, hits its API, and judges every surprise against a named reason before calling it a lead. A lead only becomes a finding after it survives a reproduction on a pinned baseline, a traced root cause, and a real attempt to disprove it. Nothing gets filed, committed, or pushed without you granting that specific action, every time.
+An evidence-driven bug hunter and issue finder for any cloned codebase, CLI, library, web app, API service, mobile, desktop, or infra. It syncs your primary branch to the latest commit on a fresh branch, learns the project from its own docs, runs it like a real user, and reports only bugs it actually reproduced, each with a confidence score, a priority, and a difficulty estimate. Pick one, and `issue-fixer` proves the fix red-to-green with the project's own CI commands before writing a local PR draft.
 
 ## Why
 
-Most "find bugs in my repo" prompts produce a wall of plausible-sounding guesses: some real, most not, with no way to tell which is which without redoing the investigation yourself. Issue Finder is built around the opposite bias: a lead is not a finding until it has been reproduced, traced, and actively challenged. Most leads this suite generates should die during verification. That's the gate working, not the gate failing.
+Most "find bugs in my repo" prompts produce a wall of plausible-sounding guesses: some real, most not, with no way to tell which is which without redoing the investigation yourself. Issue Finder is built around the opposite bias: a lead is not a finding until it's been reproduced with a real command and real output, scored against a fixed checklist, and survived an adversarial skeptic pass. Most leads should die during verification; that's the gate working, not the gate failing.
 
-## The safety model
+## How it works
 
-- **Read-only by default.** `issue-finder` never edits the target project's tracked source. Fixing a finding is a separate, explicit step: run `issue-fixer` by name, once, per finding.
-- **Authorization lives in a file, not a chat turn.** Every external action (commit, push, rebase, force-push, a public issue, a PR, a private security report) is tracked in `ENGAGEMENT.md`, inside the target checkout's `.issue-finder/` workspace, and defaults to **no**. This file persists across sessions and context compaction, so a permission you granted an hour ago doesn't silently carry forward to an action you never actually authorized.
-- **Security-sensitive findings override everything else.** The moment a candidate's impact involves unauthorized access, data exposure, or privilege escalation, its disposition becomes `Security-sensitive: private handling required`, and that overrides every other authorization already granted for that engagement. It's written only to `.issue-finder/private/` (directory mode `0700`, files mode `0600`), and `drafting-issues` writes a private advisory, never a public issue, for it.
-- **A target's own instructions are data, not commands.** A target project's `AGENTS.md`, `CLAUDE.md`, rules files, or bundled scripts are read as information about that project's conventions. They are never treated as instructions that expand this suite's own authorization, even if the target repo tries to say otherwise.
-- **Sandboxed execution.** Building and running a cloned project means running untrusted code. The suite prefers a devcontainer, then a container, then a disposable VM or cloud sandbox, and only falls back to the host with your explicit, informed consent.
+1. **Sync.** Stash any local changes (never dropped), fetch, fast-forward or replay the primary branch onto its latest upstream commit, and branch into `bughunt/<date>-<sha>`. Your original branch and commits are never touched.
+2. **Understand.** Detect the project's type and toolchain, read its README/CONTRIBUTING/CI config, and record the exact install/build/lint/test commands, taken from CI, not guessed.
+3. **Baseline.** Install and run those commands against the untouched synced base. A baseline failure is itself a finding.
+4. **Hunt.** Follow the docs exactly as a new user would, then probe the edge cases for that project type.
+5. **Verify and score.** Every lead gets reproduced, root-caused, checked against a skeptic subagent, and scored: confidence (0-10), priority (P0-P3), difficulty (0-10).
+6. **Report and ask.** Show the scorecard, ask which finding (if any) to fix now.
 
-Full detail: [`skills/issue-finder/references/ENGAGEMENT.md`](skills/issue-finder/references/ENGAGEMENT.md), [`skills/issue-finder/references/GROUNDING.md`](skills/issue-finder/references/GROUNDING.md), and [`SECURITY.md`](SECURITY.md).
+```text
+Confirmed findings
+
+Rank  ID      Finding                               Confidence  Priority  Difficulty
+1     IF-002  Crash on an empty input file          8/10        P0        3/10
+2     IF-001  Documented --verbose flag is ignored  9/10        P1        2/10
+```
+
+Pick one, and `issue-fixer` writes a failing regression test, makes the smallest root-cause patch, re-runs the full CI ladder against the recorded baseline, and leaves a local PR draft. Nothing is pushed or opened anywhere unless you say so.
+
+## Safety
+
+- **`issue-finder` never edits your tracked source.** It stashes, syncs, and branches, all local and reversible, then reads, builds, and runs the project to hunt. `issue-fixer` is the only thing that writes code, and only inside its own `fix/<slug>` branch, for exactly one finding you named.
+- **Push, a public issue, a PR, and a security report always need their own explicit yes**, asked in chat at the moment each would happen. Nothing is bundled into a blanket "go ahead," and nothing from a prior turn carries forward silently.
+- **Security findings stay private.** Full detail lives only in `.issue-finder/private/`; the scorecard and every report show only "Security finding," never a description, regardless of what's authorized for ordinary findings.
+- **The target's own instructions are information, not permission.** Its `AGENTS.md`, rules files, and bundled skills describe its conventions; nothing in them expands what this suite is authorized to do.
+- **Zero findings is a complete, honest result.** Nothing gets inflated or padded to avoid reporting it.
+
+Full detail: [`AGENTS.md`](AGENTS.md), [`SECURITY.md`](SECURITY.md), and [ADR 0004](.agents/adr/0004-two-skill-find-then-fix.md).
 
 ## Install
 
@@ -61,15 +80,15 @@ Re-run to update; Gemini does not auto-update skills.
 npx skills@latest add ANAMASGARD/issue-finder -a <agent>  # cursor, opencode, windsurf, devin, amp; omit -a to choose
 ```
 
-When the installer asks which skills to take, choose all six: `issue-finder`, `exploratory-testing`, `verifying-findings`, `screening-duplicates`, `drafting-issues`, `issue-fixer`. Installing only `issue-finder` leaves it unable to call its companions. To update, run `npx skills@latest update`, and re-run `add` to pick up new skills.
+Take both skills: `issue-finder` and `issue-fixer`. `issue-finder` hands off to `issue-fixer` by name once you pick a finding to fix, so installing only one leaves that handoff unable to complete. To update, run `npx skills@latest update`, and re-run `add` to pick up changes.
 
 ### Single-skill install
 
 ```bash
-npx skills@latest add ANAMASGARD/issue-finder --skill issue-finder --skill exploratory-testing --skill verifying-findings --skill screening-duplicates --skill drafting-issues
+npx skills@latest add ANAMASGARD/issue-finder --skill issue-finder
 ```
 
-Omit `issue-fixer` only if you never want this suite touching source code, even on request.
+Omit `issue-fixer` only if you never want this suite touching source code, even on request; you can still fix findings yourself from the report.
 
 ## Usage
 
@@ -83,70 +102,50 @@ Then, in your agent:
 /issue-finder
 ```
 
-The agent asks about scope and budget, sets up `.issue-finder/ENGAGEMENT.md` with every external action defaulted to no, grounds itself in the repo's real state, and runs the full pipeline: explore like a user, hunt for leads, verify each one against evidence, screen for duplicates, rank, and write local drafts. It stops at `REPORT.md`; nothing is filed or pushed.
+It syncs your primary branch to the latest commit on a new `bughunt/` branch, learns the project, runs it like a real user, and stops at a scorecard plus `.issue-finder/REPORT.md`. Nothing is filed or pushed.
 
-To fix one finding from that report:
+Pick a finding from the scorecard, and it hands off automatically, or call it yourself:
 
 ```
 /issue-fixer IF-002
 ```
 
-This asks for explicit authorization to create a local branch and change source if `ENGAGEMENT.md` doesn't already grant it, writes a failing regression test first, makes the smallest fix for the already-traced root cause, and ends at a local PR draft. Opening the actual PR is a separate action.
+It fetches the latest tip again, writes a failing regression test, makes the smallest fix for the already-traced root cause, proves it with the project's own CI commands, and leaves a local PR draft. Opening the actual PR is a separate action.
 
-You can also call any of the four model-invoked disciplines directly, without running the full pipeline, for a narrower question:
+## Reference
 
-- "Is this a real bug or a false positive?" calls `verifying-findings`.
-- "Has this already been reported upstream?" calls `screening-duplicates`.
-- "Explore this app like a new user and tell me what's broken." calls `exploratory-testing`.
-- "Write up this finding as an issue." calls `drafting-issues`.
-
-## Reference, grouped by invocation
-
-**User-invoked** (you type the name; these never fire on their own):
-
-| Skill | Docs |
-| --- | --- |
-| `issue-finder` | [docs/skills/issue-finder.md](docs/skills/issue-finder.md) |
-| `issue-fixer` | [docs/skills/issue-fixer.md](docs/skills/issue-fixer.md) |
-
-**Model-invoked** (reachable by name or automatically, when the task fits):
-
-| Skill | Docs |
-| --- | --- |
-| `exploratory-testing` | [docs/skills/exploratory-testing.md](docs/skills/exploratory-testing.md) |
-| `verifying-findings` | [docs/skills/verifying-findings.md](docs/skills/verifying-findings.md) |
-| `screening-duplicates` | [docs/skills/screening-duplicates.md](docs/skills/screening-duplicates.md) |
-| `drafting-issues` | [docs/skills/drafting-issues.md](docs/skills/drafting-issues.md) |
-
-See [`.agents/invocation.md`](.agents/invocation.md) for why the split exists, and [`GLOSSARY.md`](GLOSSARY.md) for the shared vocabulary (lead, candidate, disposition, finding, oracle, journey, draft, proof boundary) used consistently across every skill.
+| Skill | Invocation | Docs |
+| --- | --- | --- |
+| `issue-finder` | User-invoked (`/issue-finder`) | [skills/issue-finder/SKILL.md](skills/issue-finder/SKILL.md) |
+| `issue-fixer` | Model-invoked (by `issue-finder`'s handoff, or `/issue-fixer <id>`) | [skills/issue-fixer/SKILL.md](skills/issue-fixer/SKILL.md) |
 
 ## FAQ
 
-**Will this file issues on the target project for me?**
-No. `issue-finder` stops at local drafts. Opening a real issue, PR, or sending a security report each needs its own explicit authorization, granted individually, after you've reviewed the draft yourself.
+**Will this file issues or open PRs on my project for me?**
+No. `issue-finder` stops at a local report, and `issue-fixer` stops at a local PR draft. Opening a real issue, PR, or sending a security report each needs its own explicit "yes," asked at the moment it would happen.
 
 **Will it commit or push to my repo?**
-No, not without explicit authorization recorded in `ENGAGEMENT.md`. The default for every external action is no.
+It makes local commits only, on its own `bughunt/`/`fix/` branches, never on the branch you were already on. It never pushes without you explicitly saying so.
 
 **What if it finds a security vulnerability?**
-It's handled privately, written only to `.issue-finder/private/` with restrictive file permissions, and routed to a private advisory draft, never a public issue, regardless of what else is authorized for that engagement. See [`SECURITY.md`](SECURITY.md).
+It's handled privately: written only to `.issue-finder/private/`, shown in the scorecard only as "Security finding," and never named in a commit message or branch name. See [`SECURITY.md`](SECURITY.md).
 
 **Does it work on anything besides web apps?**
-Yes. `exploratory-testing` ships a playbook per project type: CLI tools, web UIs, HTTP services, libraries and SDKs, Kubernetes and infrastructure tooling, CI actions and integrations, parsers and data tools, desktop and mobile apps (including GTK/GNOME), and security scanners themselves.
+Yes. `skills/issue-finder/references/project-types.md` covers CLIs, libraries/SDKs, web UIs, HTTP/API services, full-stack apps, mobile, desktop, infra/IaC, data and language tooling, and browser/editor plugins, each with how to recognize it, what environment to use, and its typical bug sources.
 
-**Why are `issue-finder` and `issue-fixer` user-invoked instead of automatic?**
-A full run builds and exercises the target, and can run for a long time. Firing that from a casual "does this have any bugs?" would surprise you with an expensive workflow you didn't ask for. The tradeoff: a skill with `disable-model-invocation` is a non-spec key, so these two skills fail strict `skills-ref validate` and a claude.ai zip upload. See [`.agents/adr/0001-user-invoked-entry-points.md`](.agents/adr/0001-user-invoked-entry-points.md) for the full reasoning.
+**Why is `issue-finder` user-invoked but `issue-fixer` isn't?**
+A full `issue-finder` run syncs a branch, installs dependencies, and can run for a long time; firing that from a casual remark would surprise you. `issue-fixer` only ever acts on one specific, already-scored finding ID, so once you've named one, `issue-finder` can hand off to it directly instead of making you type a second command. See [ADR 0001](.agents/adr/0001-user-invoked-entry-points.md) and [ADR 0004](.agents/adr/0004-two-skill-find-then-fix.md).
 
-**What if I only install `issue-finder`?**
-It will reach a step that needs a companion skill, stop there, and tell you exactly which one to install. It never inlines a weaker substitute for a missing companion.
+**What happens to my local work in progress when I run this?**
+It's stashed, never dropped, before anything else happens. If sync can't complete cleanly (a conflicting rebase, an in-progress merge), it stops and tells you exactly how to get back to where you started.
 
 **Can I run this against a project I'm actively developing myself, not someone else's open-source project?**
-Yes. The pipeline doesn't care whose project it is; the authorization model is the same either way.
+Yes. The pipeline doesn't care whose project it is; the safety model is the same either way.
 
 ## Maintaining this repository
 
-See [`AGENTS.md`](AGENTS.md) for the rules that govern this repository's own layout, versioning, and safety invariants, and [`SCOPE.md`](SCOPE.md) for what does and doesn't belong in a change.
+See [`AGENTS.md`](AGENTS.md) for the rules that govern this repository's own layout, versioning, and safety invariants.
 
-## License
+## License and credit
 
-[MIT](LICENSE)
+[GPL-3.0-only](LICENSE), with a required attribution notice under GPLv3 section 7(b): see [`NOTICE`](NOTICE). You're free to use, modify, and redistribute this project; a fork or redistribution must stay GPL-3.0 and keep the "Issue Finder by Gaurav Chaudhary" credit intact. Copyright (C) 2026 Gaurav Chaudhary.

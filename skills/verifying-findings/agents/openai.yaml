@@ -1,3 +1,0 @@
-interface:
-  display_name: "Verifying Findings"
-  short_description: "Evidence gates and dispositions for a suspected bug"

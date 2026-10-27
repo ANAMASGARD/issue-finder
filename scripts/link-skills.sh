@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: GPL-3.0-only
+# Copyright (C) 2026 Gaurav Chaudhary. See NOTICE for required attribution.
+#
 # Symlink every skill in this repo into local agent skill directories, for
 # testing changes without a real install/publish round-trip.
 #

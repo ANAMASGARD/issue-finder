@@ -5,12 +5,12 @@ body:
   - type: markdown
     attributes:
       value: |
-        Please check `SCOPE.md` and `.out-of-scope/` first. A hypothetical improvement ("it would be better if...") without an observed failure will be closed as `needs-info`.
+        A hypothetical improvement ("it would be better if...") without an observed failure will be closed as `needs-info`.
   - type: input
     id: skill
     attributes:
       label: Skill
-      description: Which skill, e.g. `issue-finder`, `verifying-findings`.
+      description: Which skill, e.g. `issue-finder` or `issue-fixer`.
     validations:
       required: true
   - type: input

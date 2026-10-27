@@ -9,12 +9,13 @@
     {
       "name": "issue-finder",
       "source": "./",
-      "description": "Evidence-driven bug, vulnerability, and performance hunting for any cloned codebase, using the project like a real user and verifying every finding before it is reported.",
+      "description": "Issue finder and bug hunter for any codebase: run it like a real user, report only reproduced bugs with a confidence score, then fix one red-to-green.",
       "category": "security",
       "keywords": [
+        "issue-finder",
+        "bug-hunter",
         "bug-hunting",
         "security",
-        "exploratory-testing",
         "qa",
         "vulnerability-research"
       ]

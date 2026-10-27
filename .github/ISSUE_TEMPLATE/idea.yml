@@ -1,11 +1,11 @@
 name: Idea
-description: Propose an improvement to an existing skill (new skills are out of scope; see SCOPE.md).
+description: Propose an improvement to an existing skill.
 labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
       value: |
-        Read `SCOPE.md` first. An idea stays open only if it describes an observed failure in a real engagement, not a hypothetical improvement, and does not match anything in `.out-of-scope/`.
+        An idea stays open only if it describes an observed failure in a real engagement, not a hypothetical improvement.
   - type: input
     id: skill
     attributes:

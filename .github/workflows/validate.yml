@@ -25,10 +25,15 @@ jobs:
       - name: Check plugin manifest versions are in sync
         run: npm run check-plugin-version
 
-      - name: Shellcheck
+      - name: Shellcheck repo scripts
         uses: ludeeus/action-shellcheck@master
         with:
           scandir: ./scripts
+
+      - name: Shellcheck skill scripts
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: ./skills
 
       - name: Validate plugin manifests parse as JSON
         run: |

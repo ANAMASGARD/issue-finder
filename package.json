@@ -1,13 +1,13 @@
 {
   "name": "issue-finder",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Evidence-driven agent skill suite that hunts a locally cloned codebase for real bugs, vulnerabilities, performance problems, and missing features by using the project like a real user.",
+  "description": "Issue finder and bug hunter for any codebase (CLI, library, web app, API, mobile, infra): syncs the primary branch, runs the project like a real user, and reports only reproduced bugs with a confidence score, priority, and difficulty.",
   "repository": {
     "type": "git",
     "url": "https://github.com/ANAMASGARD/issue-finder"
   },
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "scripts": {
     "changeset": "changeset",
     "version": "changeset version && node scripts/sync-plugin-version.mjs",
