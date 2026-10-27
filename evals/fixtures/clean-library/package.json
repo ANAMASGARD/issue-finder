@@ -1,0 +1,10 @@
+{
+  "name": "slugify-eval-fixture",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A clean-control fixture for Issue Finder's evals. Deliberately correct and fully documented.",
+  "main": "slugify.js",
+  "scripts": {
+    "test": "node --test"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "path-traversal-server-eval-fixture",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A security-sensitive fixture for Issue Finder's evals: a static file server with a planted path-traversal vulnerability.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

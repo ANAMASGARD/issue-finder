@@ -1,0 +1,50 @@
+{
+  "exploratory-testing": {
+    "should_fire": [
+      "Explore this web app like a new user and tell me what's broken.",
+      "Dogfood this CLI and see what feels wrong.",
+      "Use this project the way a real user would and report anything surprising."
+    ],
+    "near_miss_should_not_fire": [
+      "What does this function do?",
+      "Explain the architecture of this codebase.",
+      "Summarize the README for me."
+    ]
+  },
+  "verifying-findings": {
+    "should_fire": [
+      "Is this actually a bug, or am I misreading the code?",
+      "Verify whether this crash report is real before I file it.",
+      "I think this is a false positive, can you check?"
+    ],
+    "near_miss_should_not_fire": [
+      "What's the severity of CVE-2024-12345?",
+      "Explain what this error message generally means.",
+      "Write unit tests for this function."
+    ]
+  },
+  "screening-duplicates": {
+    "should_fire": [
+      "Has this bug already been reported upstream?",
+      "Check if there's an existing issue for this before I file a new one.",
+      "Is this a known, already-fixed issue?"
+    ],
+    "near_miss_should_not_fire": [
+      "List all open issues in this repo.",
+      "What's the oldest open issue in this project?",
+      "Summarize the project's issue tracker activity this month."
+    ]
+  },
+  "drafting-issues": {
+    "should_fire": [
+      "Write this up as a bug report I can file.",
+      "Draft a GitHub issue for this confirmed finding.",
+      "Prepare an issue draft following this project's own template."
+    ],
+    "near_miss_should_not_fire": [
+      "Write a comment for this function.",
+      "Draft a commit message for this change.",
+      "Write the PR description for my change."
+    ]
+  }
+}
