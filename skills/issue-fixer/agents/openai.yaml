@@ -1,0 +1,5 @@
+interface:
+  display_name: "Issue Fixer"
+  short_description: "Fix one confirmed finding, red test first"
+policy:
+  allow_implicit_invocation: false
